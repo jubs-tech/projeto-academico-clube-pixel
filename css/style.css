@@ -1,0 +1,37 @@
+/* CSS */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+    --lilas: #BCA7E8;
+    --lavanda: #EEE7FA;
+    --creme: #FFF9F1;
+    --roxo: #5C467F;
+    --rosa: #F1B8CC;
+    --branco: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--creme);
+    color: var(--roxo);
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: var(--lavanda);
+    padding: 20px;
+}
+
+nav a {
+    color: var(--roxo);
+    font-family: 'Pixelify Sans', Arial, sans-serif;
+}
+
+h1, h2 {
+    font-family: 'Pixelify Sans', Arial, sans-serif;
+}
