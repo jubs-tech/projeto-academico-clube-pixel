@@ -14,7 +14,7 @@
         <nav>
             <ul>
                 <li><a href="#inicio"> Início</a></li>
-                <li><a href="#beneficios"> Beneficios</a></li>
+                <li><a href="#beneficios"> Benefícios</a></li>
                 <li><a href="#planos"> Planos</a></li>
                 <li><a href="#contato"> Contato</a></li>
             </ul>
@@ -30,6 +30,7 @@
         </section>
 
         <section id="beneficios">
+
             <h2>Benefícios do Clube Pixel</h2>
             <p>Estamos preparando materiais digitais, um planejador de estudos e um checklist de tarefas para ajudar na organização dos estudos.</p>
             
@@ -37,10 +38,12 @@
                 <h3>Materiais digitais</h3>
                 <p>Materiais de apoio planejados para facilitar a revisão dos conteúdos escolares.</p>
             </article>
-        <article class="card-beneficio">
-            <h3>Planejador de estudos</h3>
-            <p>Recurso planejado para ajudar a organizar matérias e horários de estudo.</p>
+
+            <article class="card-beneficio">
+                <h3>Planejador de estudos</h3>
+                <p>Recurso planejado para ajudar a organizar matérias e horários de estudo.</p>
             </article>
+
             <article class="card-beneficio">
                 <h3>Checklist de tarefas</h3>
                 <p>Ferramenta planejada para acompanhar atividades e compromissos de estudo.</p>
@@ -54,18 +57,31 @@
         </section>
         
         <section id="contato">
+
             <h2>Entre em Contato</h2>
             <p>Tem alguma dúvida sobre o Clube Pixel? Entre em contato com a nossa equipe!</p>
+            
+            <form id="form-contato">
+
+                <label for="nome">Seu nome:</label>
+                <input type="text" id="nome" name="nome">
+
+                <label for="email">Seu e-mail:</label>
+                <input type="email" id="email" name="email">
+                
+                <label for="mensagem">Sua mensagem:</label>
+                <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+                <button type="button">Enviar mensagem</button>
+
+            </form>
+
         </section>
         
-  
     </main>
 
-    
-<footer>
-    <p>Clube Pixel — Seu clube de estudos.</p>
-</footer>
-
+    <footer>
+        <p>Clube Pixel — Seu clube de estudos.</p>
+    </footer>
 
 </body>
 </html>
