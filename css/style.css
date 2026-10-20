@@ -25,6 +25,9 @@ body {
 header {
     background-color: var(--lavanda);
     padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 nav a {
@@ -32,6 +35,33 @@ nav a {
     font-family: 'Pixelify Sans', Arial, sans-serif;
 }
 
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
 h1, h2 {
     font-family: 'Pixelify Sans', Arial, sans-serif;
 }
+
+.card-beneficio {
+    background-color: var(--branco);
+    border: 2px solid var(--lilas);
+    padding: 20px;
+    margin-top: 16px;
+    flex: 1 1 220px;
+}
+
+#beneficios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+#beneficios > h2,
+#beneficios > p {
+    flex-basis: 100%;
+}
+
+
