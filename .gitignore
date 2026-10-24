@@ -1,0 +1,8 @@
+
+# Bibliotecas instaladas pelo npm
+node_modules/
+
+# Credenciais e variaveis de ambiente
+.env
+.env.*
+!.env.example
