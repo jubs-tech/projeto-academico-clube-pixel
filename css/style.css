@@ -22,12 +22,18 @@ body {
     font-family: Arial, sans-serif;
 }
 
+main {
+    padding: 20px;
+}
+
 header {
     background-color: var(--lavanda);
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 nav a {
@@ -35,10 +41,16 @@ nav a {
     font-family: 'Pixelify Sans', Arial, sans-serif;
 }
 
+nav {
+    flex: 0 1 360px;
+}
+
 nav ul {
     display: flex;
     gap: 20px;
     list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 h1, h2 {
@@ -65,3 +77,16 @@ h1, h2 {
 }
 
 
+#form-contato {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+#form-contato input,
+#form-contato textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+}
