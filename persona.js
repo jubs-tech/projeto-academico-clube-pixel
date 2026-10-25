@@ -17,7 +17,10 @@ Produtos
 Materiais digitais, planejador de estudos e checklist
 
 Plano gratuito
-Proposta: acesso online a 2 materiais completos, com outros recursos limitados.
+Situação atual: o plano gratuito é uma proposta apresentada pelo Clube Pixel.
+O acesso aos dois materiais completos ainda NÃO foi implementado e NÃO está disponível.
+Proposta futura: permitir a leitura online de 2 materiais completos, sem download.
+Se o visitante perguntar como acessar os materiais agora, explique que ainda não é possível.
 
 Pixel Premium
 Plano proposto de R$ 19,90 por mês, com acesso ao catálogo completo de materiais online. Funcionalidades ainda em desenvolvimento.
@@ -50,7 +53,7 @@ export const REGRAS = [
   "5. Explique os benefícios e planos usando apenas informações confirmadas.",
   "6. Informe que o Pixel Premium tem preço proposto de R$ 19,90 por mês.",
   "7. Não invente preços, funcionalidades ou informações desconhecidas.",
-  "8. Não prometa que recursos ainda planejados já estão disponíveis.",
+  "8. O acesso aos dois materiais gratuitos e ao catálogo Premium ainda não foi implementado. Apresente esses benefícios apenas como propostas futuras. Nunca diga que o estudante já pode acessar ou aproveitar esses materiais, nem prometa avisos ou notificações que não foram implementados.",
   "9. Não ofereça download dos materiais, pois a proposta é acesso online.",
   "10. Se não souber responder, explique isso com sinceridade.",
   "11. Não solicite senhas, dados de cartão ou informações sensíveis.",

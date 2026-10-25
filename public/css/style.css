@@ -90,3 +90,111 @@ h1, h2 {
     max-width: 400px;
     padding: 10px;
 }
+
+/* CHATBOT NUBI */
+
+.chat-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    background-color: #5C467F;
+    color: white;
+
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+
+    font-family: "Pixelify Sans", Arial, sans-serif;
+    cursor: pointer;
+    z-index: 1000;
+}
+/* Mantém o painel fechado inicialmente */
+#chat.hidden {
+    display: none;
+}
+
+/* Painel da Nubi */
+.chat-widget {
+    position: fixed;
+    bottom: 85px;
+    right: 20px;
+
+    width: 330px;
+    max-width: calc(100vw - 40px);
+
+    background-color: #FFF9F1;
+    border: 2px solid #5C467F;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+/* Cabeçalho da conversa */
+.chat-header {
+    background-color: #BCA7E8;
+    color: #5C467F;
+    padding: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Área das mensagens da Nubi */
+.chat-box {
+    height: 180px;
+    padding: 14px;
+    overflow-y: auto;
+    line-height: 1.5;
+}
+
+/* Área para digitar e enviar mensagens */
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid #BCA7E8;
+}
+
+.chat-input-area input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px;
+}
+
+.chat-input-area button {
+    padding: 10px 12px;
+    cursor: pointer;
+}
+/* Organização das mensagens do chat */
+.chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Mensagens da Nubi */
+.chat-box .bot {
+    align-self: flex-start;
+    background-color: #EEE7FA;
+    color: #5C467F;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 88%;
+    overflow-wrap: anywhere;
+}
+
+/* Mensagens dos estudantes */
+.chat-box .usuario {
+    align-self: flex-end;
+    background-color: #5C467F;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 88%;
+    overflow-wrap: anywhere;
+}
