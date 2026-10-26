@@ -26,6 +26,16 @@ main {
     padding: 20px;
 }
 
+main > section {
+    margin-bottom: 36px;
+}
+
+main > section:first-child {
+    background-color: var(--lavanda);
+    border: 2px solid var(--lilas);
+    padding: 24px;
+}
+
 header {
     background-color: var(--lavanda);
     padding: 20px;
@@ -34,6 +44,13 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+}
+
+.logo-clube {
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 nav a {
@@ -63,6 +80,7 @@ h1, h2 {
     padding: 20px;
     margin-top: 16px;
     flex: 1 1 220px;
+    box-shadow: 4px 4px 0 var(--lilas);
 }
 
 #beneficios {
@@ -89,6 +107,19 @@ h1, h2 {
     width: 100%;
     max-width: 400px;
     padding: 10px;
+    border: 2px solid var(--lilas);
+}
+
+#form-contato button,
+#form-contato input[type="submit"] {
+    width: auto;
+    background-color: var(--roxo);
+    color: var(--branco);
+    border: 2px solid var(--roxo);
+    padding: 10px 18px;
+    font-family: 'Pixelify Sans', Arial, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 /* CHATBOT NUBI */
