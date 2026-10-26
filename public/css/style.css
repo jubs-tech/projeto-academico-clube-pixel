@@ -198,3 +198,18 @@ h1, h2 {
     max-width: 88%;
     overflow-wrap: anywhere;
 }
+
+/* Tamanho ampliado do chat da Nubi */
+.chat-widget {
+    width: min(420px, calc(100vw - 40px));
+    height: min(65dvh, 580px);
+    max-height: calc(100dvh - 110px);
+}
+
+/* Área de mensagens ocupa o espaço disponível */
+.chat-box {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    overflow-y: auto;
+}
