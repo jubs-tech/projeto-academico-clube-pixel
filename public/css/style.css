@@ -94,6 +94,47 @@ h1, h2 {
     flex-basis: 100%;
 }
 
+#planos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+#planos > h2,
+#planos > p {
+    flex-basis: 100%;
+}
+
+.card-plano {
+    background-color: var(--branco);
+    border: 2px solid var(--lilas);
+    padding: 20px;
+    flex: 1 1 260px;
+    box-shadow: 4px 4px 0 var(--lilas);
+}
+
+.card-plano .preco {
+    font-family: 'Pixelify Sans', Arial, sans-serif;
+    font-size: 28px;
+    margin: 8px 0;
+}
+
+.card-plano ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+}
+
+.aviso-plano {
+    font-size: 14px;
+    padding-top: 10px;
+    border-top: 2px dashed var(--lilas);
+}
+
+.card-premium {
+    background-color: var(--lavanda);
+    border-color: var(--roxo);
+    box-shadow: 4px 4px 0 var(--roxo);
+}
 
 #form-contato {
     display: flex;
