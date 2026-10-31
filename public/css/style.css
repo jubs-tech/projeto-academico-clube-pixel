@@ -1,13 +1,21 @@
 /* CSS */
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
 :root {
     --lilas: #BCA7E8;
+    --lilas-forte: #8E74CC;
     --lavanda: #EEE7FA;
     --creme: #FFF9F1;
-    --roxo: #5C467F;
     --rosa: #F1B8CC;
+    --rosa-forte: #E58FB0;
+    --roxo: #5C467F;
+    --roxo-escuro: #2E1F45;
+    --texto: #35254F;
     --branco: #ffffff;
+    --erro: #B0305F;
+
+    --fonte-titulo: 'Pixelify Sans', 'Courier New', monospace;
+    --fonte-texto: 'Figtree', Arial, sans-serif;
 }
 
 * {
@@ -16,62 +24,214 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-padding-top: 110px;
+}
+
 body {
     background-color: var(--creme);
-    color: var(--roxo);
-    font-family: Arial, sans-serif;
+    background-image:
+        linear-gradient(to right, rgba(188, 167, 232, 0.15) 2px, transparent 2px),
+        linear-gradient(to bottom, rgba(188, 167, 232, 0.15) 2px, transparent 2px);
+    background-size: 32px 32px;
+
+    color: var(--texto);
+    font-family: var(--fonte-texto);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+}
+
+h1, h2, h3 {
+    font-family: var(--fonte-titulo);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--roxo-escuro);
+}
+
+::selection {
+    background-color: var(--roxo);
+    color: var(--branco);
+}
+
+::placeholder {
+    color: #6E5C8C;
+    opacity: 1;
+}
+
+input,
+textarea {
+    caret-color: var(--roxo);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--roxo-escuro);
+    outline-offset: 3px;
 }
 
 main {
-    padding: 20px;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 32px 20px 0;
 }
 
 main > section {
-    margin-bottom: 36px;
+    margin-bottom: 80px;
 }
 
-main > section:first-child {
-    background-color: var(--lavanda);
-    border: 2px solid var(--lilas);
-    padding: 24px;
+main p {
+    max-width: 62ch;
+    font-weight: 500;
+}
+
+/* Títulos das seções com destaque rosa */
+main h2 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    width: fit-content;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 6px solid var(--rosa-forte);
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+}
+
+/* Espaço reservado para os ícones dos títulos */
+main h2::before {
+    content: "";
+    flex: none;
+    width: 44px;
+    height: 44px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+/* Ícone correspondente a cada seção do site */
+#inicio h2::before {
+    background-image: url("../imagens/icones/ico-lampada.svg");
+}
+
+#beneficios h2::before {
+    background-image: url("../imagens/icones/ico-livro.svg");
+}
+
+#planos h2::before {
+    background-image: url("../imagens/icones/ico-calendario.svg");
+}
+
+#contato h2::before {
+    background-image: url("../imagens/icones/ico-carta.svg");
 }
 
 header {
-    background-color: var(--lavanda);
-    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
+    gap: 4px;
+
+    padding: 8px 12px;
+
+    background-color: var(--lavanda);
+    border-bottom: 4px solid var(--lilas);
 }
 
 .logo-clube {
-    width: 180px;
+    display: block;
+    width: 170px;
     max-width: 100%;
     height: auto;
-    display: block;
 }
 
-nav a {
-    color: var(--roxo);
-    font-family: 'Pixelify Sans', Arial, sans-serif;
+header h1 {
+    line-height: 0;
 }
 
 nav {
-    flex: 0 1 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 nav ul {
+    flex: 1;
     display: flex;
-    gap: 20px;
+    justify-content: space-between;
     list-style: none;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 
-h1, h2 {
-    font-family: 'Pixelify Sans', Arial, sans-serif;
+nav a {
+    display: block;
+    padding: 8px 6px;
+    min-height: 40px;
+    color: var(--texto);
+    font-family: var(--fonte-titulo);
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: 3px solid transparent;
+    transition: background-color 150ms ease-out,
+                border-color 150ms ease-out,
+                color 150ms ease-out;
+}
+
+nav a.ativo {
+    background-color: var(--roxo);
+    border-color: var(--roxo-escuro);
+    color: var(--branco);
+}
+
+#inicio {
+    padding: 72px 48px 56px;
+    padding-right: 45%;
+    min-height: 400px;
+
+    background-color: var(--lavanda);
+    border: 4px solid var(--roxo-escuro);
+    box-shadow: 8px 8px 0 var(--lilas-forte);
+
+    background-image:
+        url("../imagens/ilustracoes/hero-livro.svg"),
+        url("../imagens/ilustracoes/pixels-flutuando.svg"),
+        conic-gradient(
+            var(--lilas) 25%,
+            transparent 0 50%,
+            var(--lilas) 0 75%,
+            transparent 0
+        );
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    background-position:
+        right 72px bottom 56px,
+        right 100px top 56px,
+        left top;
+    background-size: 336px auto, 196px auto, 16px 16px;
+}
+
+#inicio h2 {
+    margin-bottom: 20px;
+    border-bottom: 0;
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 1;
+    text-shadow: 4px 4px 0 var(--lilas);
+}
+
+#inicio h2::before {
+    width: 60px;
+    height: 60px;
+}
+
+#inicio p {
+    max-width: 30ch;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    color: var(--roxo-escuro);
 }
 
 .card-beneficio {
@@ -164,7 +324,6 @@ h1, h2 {
 }
 
 /* CHATBOT NUBI */
-
 .chat-toggle {
     position: fixed;
     bottom: 20px;
@@ -181,6 +340,7 @@ h1, h2 {
     cursor: pointer;
     z-index: 1000;
 }
+
 /* Mantém o painel fechado inicialmente */
 #chat.hidden {
     display: none;
@@ -215,6 +375,7 @@ h1, h2 {
     justify-content: space-between;
     align-items: center;
 }
+
 /* Área das mensagens da Nubi */
 .chat-box {
     height: 180px;
@@ -242,6 +403,7 @@ h1, h2 {
     padding: 10px 12px;
     cursor: pointer;
 }
+
 /* Organização das mensagens do chat */
 .chat-box {
     display: flex;
@@ -284,4 +446,97 @@ h1, h2 {
     min-height: 0;
     height: auto;
     overflow-y: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    nav a:hover {
+        background-color: var(--lavanda);
+        border-color: var(--lilas-forte);
+    }
+
+    nav a.ativo:hover {
+        background-color: var(--roxo);
+        border-color: var(--roxo-escuro);
+    }
+}
+
+@media (min-width: 400px) {
+    .logo-clube {
+        width: 190px;
+    }
+}
+
+@media (min-width: 720px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 10px 24px;
+    }
+
+    .logo-clube {
+        width: 180px;
+    }
+
+    nav {
+        width: auto;
+        gap: 12px;
+    }
+
+    nav ul {
+        flex: none;
+        gap: 4px;
+    }
+
+    nav a {
+        padding: 10px 12px;
+        min-height: 44px;
+        font-size: 1rem;
+    }
+
+    main {
+        padding: 48px 40px 0;
+    }
+}
+
+@media (min-width: 980px) {
+    header {
+        padding: 10px 40px;
+    }
+
+    .logo-clube {
+        width: 220px;
+    }
+
+    nav ul {
+        gap: 6px;
+    }
+
+    nav a {
+        padding: 10px 14px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 979px) {
+    #inicio {
+        padding: 56px 24px 250px;
+        min-height: 0;
+        background-position:
+            center bottom 28px,
+            right 28px bottom 160px,
+            left top;
+        background-size: 252px auto, 84px auto, 16px 16px;
+    }
+
+    #inicio p {
+        max-width: 36ch;
+    }
+}
+
+@media (max-width: 480px) {
+    #inicio h2::before {
+        width: 44px;
+        height: 44px;
+    }
 }
