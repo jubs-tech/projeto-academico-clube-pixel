@@ -1,6 +1,22 @@
-/* CSS */
+/* ============================================================
+   CLUBE PIXEL — Estilos da interface
+
+   Identidade visual: tons de lilás, roxo, rosa e creme, com
+   fontes Pixelify Sans e Figtree, ícones SVG e sombras pixeladas.
+
+   Organização do arquivo:
+   - Base, tipografia e navegação
+   - Seções Início, Benefícios e Planos
+   - Formulário de contato e rodapé
+   - Interface da Nubi
+   - Responsividade e preferências de movimento
+
+   A interface da Nubi usa os IDs e classes do index.html.
+   O script.js controla a abertura, o fechamento e as mensagens.
+   ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
+/* Variáveis globais: a mesma paleta é reutilizada em todo o site. */
 :root {
     --lilas: #BCA7E8;
     --lilas-forte: #8E74CC;
@@ -28,6 +44,7 @@ html {
     scroll-padding-top: 110px;
 }
 
+/* O fundo quadriculado usa dois gradientes cruzados de 32px. */
 body {
     background-color: var(--creme);
     background-image:
@@ -63,6 +80,7 @@ textarea {
     caret-color: var(--roxo);
 }
 
+/* O contorno de foco permite localizar os controles pelo teclado. */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -71,6 +89,7 @@ textarea:focus-visible {
     outline-offset: 3px;
 }
 
+/* Conteúdo principal centralizado, com largura máxima para leitura. */
 main {
     max-width: 1140px;
     margin: 0 auto;
@@ -127,6 +146,7 @@ main h2::before {
     background-image: url("../imagens/icones/ico-carta.svg");
 }
 
+/* O cabeçalho permanece visível durante a rolagem da página. */
 header {
     position: sticky;
     top: 0;
@@ -188,6 +208,7 @@ nav a.ativo {
     color: var(--branco);
 }
 
+/* A seção Início combina ilustração SVG e sombra sólida. */
 #inicio {
     padding: 72px 48px 56px;
     padding-right: 45%;
@@ -255,6 +276,7 @@ nav a.ativo {
     padding-right: 25%;
 }
 
+/* Os cards adaptam sua largura ao espaço disponível com Flexbox. */
 .card-beneficio {
     flex: 1 1 260px;
     padding: 28px 24px 32px;
@@ -298,6 +320,7 @@ nav a.ativo {
     flex-basis: 100%;
 }
 
+/* Os planos seguem a mesma linguagem visual dos benefícios. */
 .card-plano {
     flex: 1 1 300px;
     display: flex;
@@ -404,6 +427,7 @@ nav a.ativo {
 }
 
 /* Formulário de contato: campos organizados verticalmente */
+/* O formulário mantém campos empilhados para facilitar o preenchimento. */
 #form-contato {
     display: flex;
     flex-direction: column;
@@ -501,129 +525,209 @@ footer {
     }
 }
 
-/* CHATBOT NUBI */
-.chat-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-
-    background-color: #5C467F;
-    color: white;
-
-    border: none;
-    border-radius: 12px;
-    padding: 12px 18px;
-
-    font-family: "Pixelify Sans", Arial, sans-serif;
+/* Botões do chat: mesma identidade visual do site, sem alterar
+   os estilos do formulário já publicados pela Amanda. */
+.chat-toggle,
+.chat-input-area button {
+    background-color: var(--roxo);
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-size: 1.05rem;
+    border: 3px solid var(--roxo-escuro);
+    border-radius: 0;
+    box-shadow: 4px 4px 0 var(--lilas-forte);
     cursor: pointer;
-    z-index: 1000;
+    transition: transform 150ms ease-out,
+                box-shadow 150ms ease-out,
+                background-color 150ms ease-out;
 }
 
-/* Mantém o painel fechado inicialmente */
+/* Simula o pressionamento dos controles do chat. */
+.chat-toggle:active,
+.chat-input-area button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--lilas-forte);
+}
+
+/* ---------- 11. Chat da Nubi ---------- */
+.chat-toggle {
+    position: fixed;
+    bottom: 14px;   /* fica dentro da faixa do rodapé quando a página chega ao fim */
+    right: 20px;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 10px;
+    box-shadow: 4px 4px 0 var(--rosa-forte);
+
+    /* Fechado: o botão tem só a largura do ícone e o resto do texto fica escondido.
+       No hover (veja a seção 12) a largura aumenta e o texto aparece. */
+    max-width: 56px;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width 250ms ease-out, transform 150ms ease-out, box-shadow 150ms ease-out, background-color 150ms ease-out;
+}
+
+/* Ícone de mensagem (imagem de fundo) */
+.chat-toggle::before {
+    content: "";
+    flex: none;
+    width: 30px;
+    height: 24px;
+    background: url("../imagens/icones/ico-chat.svg") no-repeat center / contain;
+}
+
+/* Chat aberto (classe "aberto" colocada pelo JavaScript): vira um botão rosa com "X" */
+.chat-toggle.aberto {
+    background-color: var(--rosa);
+}
+
+.chat-toggle.aberto::before {
+    background-image: url("../imagens/icones/ico-x.svg");
+}
+
 #chat.hidden {
     display: none;
 }
 
-/* Painel da Nubi */
 .chat-widget {
     position: fixed;
-    bottom: 85px;
+    bottom: 82px;
     right: 20px;
-
-    width: 330px;
-    max-width: calc(100vw - 40px);
-
-    background-color: #FFF9F1;
-    border: 2px solid #5C467F;
-    border-radius: 12px;
+    z-index: 1000;
 
     display: flex;
     flex-direction: column;
+    width: min(420px, calc(100vw - 40px));
+    height: min(65dvh, 580px);
+    max-height: calc(100dvh - 110px);
     overflow: hidden;
-    z-index: 1000;
+
+    background-color: var(--creme);
+    border: 4px solid var(--roxo-escuro);
+    box-shadow: 8px 8px 0 var(--lilas);
+
+    /* animação curta quando o chat abre */
+    transform-origin: bottom right;
+    animation: chat-abrir 180ms ease-out;
 }
 
-/* Cabeçalho da conversa */
-.chat-header {
-    background-color: #BCA7E8;
-    color: #5C467F;
-    padding: 12px;
+@keyframes chat-abrir {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
 
+.chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 12px;
+    background-color: var(--roxo);
+    border-bottom: 4px solid var(--roxo-escuro);
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-size: 1.1rem;
 }
 
-/* Área das mensagens da Nubi */
+/* Mini nuvem (a Nubi) antes do nome */
+.chat-header p {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chat-header p::before {
+    content: "";
+    width: 42px;
+    height: 18px;
+    background: url("../imagens/ilustracoes/nuvem.svg") no-repeat center / contain;
+}
+
+.chat-header button {
+    width: 36px;
+    height: 36px;
+    background-color: var(--rosa);
+    color: #2E1F45;
+    font-family: var(--fonte-titulo);
+    border: 3px solid #2E1F45;
+    cursor: pointer;
+    transition: background-color 150ms ease-out;
+}
+
 .chat-box {
-    height: 180px;
-    padding: 14px;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px;
     overflow-y: auto;
     line-height: 1.5;
+
+    /* linhas de caderno no fundo */
+    background-image: linear-gradient(to bottom, rgba(188, 167, 232, 0.3) 2px, transparent 2px);
+    background-size: 100% 28px;
 }
 
-/* Área para digitar e enviar mensagens */
+.chat-box .bot,
+.chat-box .usuario {
+    max-width: 88%;
+    padding: 10px 12px;
+    overflow-wrap: anywhere;
+    border: 3px solid var(--roxo-escuro);
+    animation: mensagem-entrar 200ms ease-out;
+}
+
+@keyframes mensagem-entrar {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+}
+
+.chat-box .bot {
+    align-self: flex-start;
+    background-color: var(--branco);
+    color: var(--roxo-escuro);
+    border-color: var(--lilas-forte);
+    box-shadow: 4px 4px 0 var(--lilas);
+}
+
+.chat-box .usuario {
+    align-self: flex-end;
+    background-color: var(--roxo);
+    color: var(--branco);
+    box-shadow: 4px 4px 0 var(--rosa-forte);
+}
+
 .chat-input-area {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px;
-    border-top: 1px solid #BCA7E8;
+    gap: 10px;
+    padding: 12px;
+    background-color: var(--lavanda);
+    border-top: 4px solid var(--roxo-escuro);
 }
 
 .chat-input-area input {
     flex: 1;
     min-width: 0;
     padding: 10px;
+    background-color: var(--branco);
+    color: var(--roxo-escuro);
+    font: inherit;
+    border: 3px solid var(--roxo);
+    border-radius: 0;
 }
 
 .chat-input-area button {
-    padding: 10px 12px;
-    cursor: pointer;
-}
-
-/* Organização das mensagens do chat */
-.chat-box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Mensagens da Nubi */
-.chat-box .bot {
-    align-self: flex-start;
-    background-color: #EEE7FA;
-    color: #5C467F;
-    padding: 10px;
-    border-radius: 8px;
-    max-width: 88%;
-    overflow-wrap: anywhere;
-}
-
-/* Mensagens dos estudantes */
-.chat-box .usuario {
-    align-self: flex-end;
-    background-color: #5C467F;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    max-width: 88%;
-    overflow-wrap: anywhere;
-}
-
-/* Tamanho ampliado do chat da Nubi */
-.chat-widget {
-    width: min(420px, calc(100vw - 40px));
-    height: min(65dvh, 580px);
-    max-height: calc(100dvh - 110px);
-}
-
-/* Área de mensagens ocupa o espaço disponível */
-.chat-box {
-    flex: 1;
-    min-height: 0;
-    height: auto;
-    overflow-y: auto;
+    padding: 10px 14px;
+    min-height: 48px;
 }
 
 /* Interação do botão do formulário em dispositivos com mouse */
@@ -660,6 +764,36 @@ footer {
     .card-plano:hover {
         box-shadow: 11px 11px 0 var(--rosa-forte);
     }
+}
+
+/* Interações dos controles da Nubi em dispositivos com mouse. */
+@media (hover: hover) and (pointer: fine) {
+    .chat-toggle:hover {
+        max-width: 300px;
+    }
+
+    .chat-toggle:hover,
+    .chat-input-area button:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 var(--rosa-forte);
+    }
+
+    .chat-header button:hover {
+        background-color: var(--branco);
+    }
+
+    .chat-toggle.aberto:hover {
+        max-width: 56px;
+    }
+}
+
+/* O nome também fica disponível quando o botão recebe foco. */
+.chat-toggle:focus-visible {
+    max-width: 300px;
+}
+
+.chat-toggle.aberto:focus-visible {
+    max-width: 56px;
 }
 
 @media (max-width: 719px) {
@@ -774,5 +908,39 @@ footer {
     #inicio h2::before {
         width: 44px;
         height: 44px;
+    }
+}
+
+/* Chat no celular: respeita as bordas e deixa o botão acessível. */
+@media (max-width: 480px) {
+    .chat-toggle {
+        right: 16px;
+        bottom: 14px;
+    }
+
+    .chat-widget {
+        right: 16px;
+        bottom: 82px;
+        width: calc(100vw - 32px);
+    }
+}
+
+/* Respeita a preferência do estudante por menos animações. */
+@media (prefers-reduced-motion: reduce) {
+    .chat-toggle,
+    .chat-header button,
+    .chat-input-area button {
+        transition: none;
+    }
+
+    .chat-widget,
+    .chat-box .bot,
+    .chat-box .usuario {
+        animation: none;
+    }
+
+    .chat-toggle:hover,
+    .chat-input-area button:hover {
+        transform: none;
     }
 }
