@@ -1,35 +1,54 @@
 console.log("JavaScript do Clube Pixel carregado!");
 
-const botaoEnviar = document.querySelector('#form-contato button');
-botaoEnviar.addEventListener('click', function() {
+// Valida o formulário sem enviar dados para um serviço externo.
+const botaoEnviar = document.querySelector("#form-contato button");
+const campoNome = document.querySelector("#nome");
+const campoEmail = document.querySelector("#email");
+const campoMensagem = document.querySelector("#mensagem");
 
-    const campoNome = document.querySelector('#nome');
+// Destaca o campo inválido e posiciona o foco para correção.
+function mostrarErro(campo, aviso) {
+    campo.classList.add("campo-erro");
+    campo.setAttribute("aria-invalid", "true");
+    alert(aviso);
+    campo.focus();
+}
+
+// Remove o destaque de erro assim que o estudante edita o campo.
+function limparErro(evento) {
+    evento.target.classList.remove("campo-erro");
+    evento.target.removeAttribute("aria-invalid");
+}
+
+campoNome.addEventListener("input", limparErro);
+campoEmail.addEventListener("input", limparErro);
+campoMensagem.addEventListener("input", limparErro);
+
+botaoEnviar.addEventListener("click", () => {
     const nome = campoNome.value.trim();
-    if (nome === '') {
-        alert('Por favor, informe seu nome.');
+    if (nome === "") {
+        mostrarErro(campoNome, "Por favor, informe seu nome.");
         return;
     }
-    
-    const campoEmail = document.querySelector('#email');
+
     const email = campoEmail.value.trim();
-    if (email === '') {
-        alert('Por favor, informe seu e-mail.');
+    if (email === "") {
+        mostrarErro(campoEmail, "Por favor, informe seu e-mail.");
         return;
     }
     if (!campoEmail.checkValidity()) {
-        alert('Por favor, digite um e-mail válido.');
+        mostrarErro(campoEmail, "Por favor, digite um e-mail válido.");
         return;
     }
 
-    
-    const campoMensagem = document.querySelector('#mensagem');
     const mensagem = campoMensagem.value.trim();
-    if (mensagem === '') {
-        alert('Por favor, escreva sua mensagem.');
+    if (mensagem === "") {
+        mostrarErro(campoMensagem, "Por favor, escreva sua mensagem.");
         return;
-    }   
-    alert('Campos preenchidos corretamente! Esta é uma demonstração: a mensagem não foi enviada.');
+    }
 
+    // A validação é demonstrativa: o site ainda não envia mensagens de contato.
+    alert("Campos preenchidos corretamente! Esta é uma demonstração: a mensagem não foi enviada.");
 });
 
 // Organiza a abertura, o fechamento e o envio de mensagens da Nubi.
@@ -137,3 +156,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// Destaca no menu a seção que ocupa a região central da tela.
+function marcarMenuAtivo() {
+    const links = document.querySelectorAll('nav a[href^="#"]');
+    const secoes = document.querySelectorAll("main section[id]");
+    const meioDaTela = window.innerHeight / 2;
+    let idAtual = "inicio";
+
+    // A última seção que alcançou o meio da tela fica selecionada.
+    secoes.forEach((secao) => {
+        if (secao.getBoundingClientRect().top <= meioDaTela) {
+            idAtual = secao.id;
+        }
+    });
+
+    // Somente o link correspondente recebe o estilo visual de ativo.
+    links.forEach((link) => {
+        link.classList.toggle("ativo", link.getAttribute("href") === "#" + idAtual);
+    });
+}
+
+window.addEventListener("scroll", marcarMenuAtivo);
+window.addEventListener("resize", marcarMenuAtivo);
+marcarMenuAtivo();
