@@ -1,5 +1,3 @@
-console.log("JavaScript do Clube Pixel carregado!");
-
 // Valida o formulário sem enviar dados para um serviço externo.
 const botaoEnviar = document.querySelector("#form-contato button");
 const campoNome = document.querySelector("#nome");
@@ -155,6 +153,64 @@ document.addEventListener("DOMContentLoaded", () => {
             caixaMensagens.scrollTop = caixaMensagens.scrollHeight;
         }
     });
+});
+
+// Menu do celular: o botão com ícone abre e fecha a lista de links.
+const cabecalho = document.querySelector("header");
+const botaoMenu = document.getElementById("menu-toggle");
+const menuPrincipal = document.getElementById("menu-principal");
+
+// Com o JavaScript ativo, o CSS esconde os links atrás do botão.
+cabecalho.classList.add("menu-pronto");
+
+function abrirMenu() {
+    cabecalho.classList.add("menu-aberto");
+    document.documentElement.classList.add("menu-sem-rolagem");
+    botaoMenu.setAttribute("aria-expanded", "true");
+    botaoMenu.setAttribute("aria-label", "Fechar menu");
+}
+
+function fecharMenu() {
+    cabecalho.classList.remove("menu-aberto");
+    document.documentElement.classList.remove("menu-sem-rolagem");
+    botaoMenu.setAttribute("aria-expanded", "false");
+    botaoMenu.setAttribute("aria-label", "Abrir menu");
+}
+
+botaoMenu.addEventListener("click", () => {
+    if (cabecalho.classList.contains("menu-aberto")) {
+        fecharMenu();
+    } else {
+        abrirMenu();
+    }
+});
+
+// Ao escolher uma seção, o menu se fecha para mostrar o conteúdo.
+menuPrincipal.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", fecharMenu);
+});
+
+// Tocar fora do menu (inclusive no fundo escurecido) também fecha o menu.
+document.addEventListener("click", (evento) => {
+    // O fundo escurecido é desenhado pelo próprio header (::after),
+    // então tocar nele conta como tocar no header.
+    const tocouFora = !cabecalho.contains(evento.target) || evento.target === cabecalho;
+    if (cabecalho.classList.contains("menu-aberto") && tocouFora) {
+        fecharMenu();
+    }
+});
+
+// Esc fecha o menu e devolve o foco ao botão.
+document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape" && cabecalho.classList.contains("menu-aberto")) {
+        fecharMenu();
+        botaoMenu.focus();
+    }
+});
+
+// Se a tela ficar larga (ex.: celular deitado), o menu volta ao normal.
+window.matchMedia("(min-width: 720px)").addEventListener("change", (mudanca) => {
+    if (mudanca.matches) fecharMenu();
 });
 
 // Destaca no menu a seção que ocupa a região central da tela.

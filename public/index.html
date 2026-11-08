@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Cor da barra do navegador no celular, igual ao cabeçalho -->
+    <meta name="theme-color" content="#EEE7FA">
     <title>Clube Pixel — Seu Clube de Estudos</title>
+    <!-- Texto que aparece no Google e ao compartilhar o link -->
+    <meta name="description" content="Clube Pixel: clube de estudos com materiais digitais, planejador de estudos e checklist de tarefas. Projeto acadêmico da Faculdade PIT.">
 
     <link rel="icon" type="image/x-icon" href="imagens/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
@@ -19,7 +23,19 @@
                 class="logo-clube">
         </h1>
 
-        <nav>
+        <!-- Botão do menu: aparece só em telas pequenas (ver style.css) -->
+        <button id="menu-toggle" class="menu-toggle" type="button"
+            aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+            <svg class="icone-menu" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+                <rect class="barra" x="3" y="5" width="18" height="3"/>
+                <rect class="barra" x="3" y="11" width="18" height="3"/>
+                <rect class="barra" x="3" y="17" width="18" height="3"/>
+            </svg>
+            <!-- X simples, mostrado quando o menu está aberto -->
+            <img class="icone-fechar" src="imagens/icones/ico-fechar.svg" alt="" width="30" height="30">
+        </button>
+
+        <nav id="menu-principal" aria-label="Menu principal">
             <ul>
                 <li><a href="#inicio"> Início</a></li>
                 <li><a href="#beneficios"> Benefícios</a></li>
@@ -92,13 +108,13 @@
             <form id="form-contato">
 
                 <label for="nome">Seu nome:</label>
-                <input type="text" id="nome" name="nome">
+                <input type="text" id="nome" name="nome" autocomplete="name" required>
 
                 <label for="email">Seu e-mail:</label>
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" autocomplete="email" required>
                 
                 <label for="mensagem">Sua mensagem:</label>
-                <textarea id="mensagem" name="mensagem" rows="4"></textarea>
+                <textarea id="mensagem" name="mensagem" rows="4" required></textarea>
                 <button type="button">Enviar mensagem</button>
 
             </form>
@@ -108,7 +124,16 @@
     </main>
 
     <footer>
-        <p>Clube Pixel — Seu clube de estudos.</p>
+        <div class="rodape-conteudo">
+            <p class="rodape-principal">
+                <span class="rodape-marca"><span class="rodape-copy">&copy;</span> 2026 Clube Pixel</span><span class="rodape-sep"> — </span><span class="rodape-slogan">Seu clube de estudos.</span>
+            </p>
+            <!-- Cada <span> é um trecho que não pode quebrar no meio -->
+            <p class="rodape-creditos">
+                Projeto acadêmico da <span>Faculdade PIT</span>, feito por
+                <span>Amanda Araújo</span>, <span>Júlia Samara</span> e <span>Laysa Millena</span>.
+            </p>
+        </div>
     </footer>
 
     <!-- Chatbot Nubi -->
@@ -120,10 +145,12 @@
 
     <div class="chat-header">
         <p>Nubi · Clube Pixel</p>
-        <button id="fechar" type="button">X</button>
+        <button id="fechar" type="button" aria-label="Fechar conversa">
+            <img src="imagens/icones/ico-fechar.svg" alt="" width="20" height="20">
+        </button>
     </div>
 
-    <div id="chat-box" class="chat-box">
+    <div id="chat-box" class="chat-box" role="log" aria-label="Mensagens da Nubi" aria-live="polite" aria-relevant="additions">
         <div class="bot">
         Olá! Sou a Nubi, atendente virtual do Clube Pixel.
         Posso explicar nossos planos e dar dicas de organização dos estudos!
@@ -131,7 +158,7 @@
     </div>
 
     <div class="chat-input-area">
-        <input type="text" id="input" placeholder="Digite sua mensagem...">
+        <input type="text" id="input" placeholder="Digite sua mensagem..." aria-label="Mensagem para a Nubi">
         <button id="enviar" type="button">Enviar</button>
     </div>
 

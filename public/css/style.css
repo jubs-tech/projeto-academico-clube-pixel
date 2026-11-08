@@ -13,7 +13,16 @@
 
    A interface da Nubi usa os IDs e classes do index.html.
    O script.js controla a abertura, o fechamento e as mensagens.
+
+   Pontos de quebra (use sempre estes valores):
+   - Celular ....... até 719px   → @media (max-width: 719px)
+   - Tablet ........ 720px+      → @media (min-width: 720px)
+   - Computador .... 980px+      → @media (min-width: 980px)
+   - Até tablet .... até 979px   → @media (max-width: 979px)
+   - Tela mínima ... até 319px   → @media (max-width: 319px)
+   - Tela baixa .... até 500px de altura → @media (max-height: 500px)
    ============================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
 /* Variáveis globais: a mesma paleta é reutilizada em todo o site. */
@@ -42,6 +51,16 @@
 
 html {
     scroll-padding-top: 110px;
+    /* Ao clicar num link do menu (#planos, #contato...), a página
+       desliza até a seção em vez de pular de uma vez. */
+    scroll-behavior: smooth;
+}
+
+/* No celular o cabeçalho ficou mais baixo com o botão de menu. */
+@media (max-width: 719px) {
+    html {
+        scroll-padding-top: 90px;
+    }
 }
 
 /* O fundo quadriculado usa dois gradientes cruzados de 32px. */
@@ -208,6 +227,184 @@ nav a.ativo {
     color: var(--branco);
 }
 
+/* ---------- Menu do celular (botão com ícone) ----------
+   Só entra em ação quando o script.js adiciona a classe
+   "menu-pronto" ao header. Sem JavaScript, os links continuam
+   visíveis como antes. */
+.menu-toggle {
+    display: none;
+}
+
+@media (max-width: 719px) {
+    header.menu-pronto {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 8px 16px;
+    }
+
+    header.menu-pronto .logo-clube {
+        /* Mantém a logo responsiva ao lado do botão de ícone. */
+        width: min(140px, calc(100vw - 100px));
+    }
+
+    .menu-pronto .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: none;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        background-color: var(--roxo);
+        color: var(--branco);
+        border: 3px solid var(--roxo-escuro);
+        border-radius: 0;
+        box-shadow: 4px 4px 0 var(--lilas-forte);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+    }
+
+    .menu-toggle:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0 0 0 var(--lilas-forte);
+    }
+
+    .icone-menu .barra {
+        fill: currentColor;
+    }
+
+    /* Menu aberto: o botão perde a caixa e fica só um X fino em pixels. */
+    .icone-fechar {
+        display: none;
+    }
+
+    .menu-aberto .menu-toggle {
+        background-color: transparent;
+        border-color: transparent;
+        box-shadow: none;
+    }
+
+    .menu-aberto .icone-menu {
+        display: none;
+    }
+
+    .menu-aberto .icone-fechar {
+        display: block;
+    }
+
+    /* Toque no X: ele só "afunda" um pouco, sem sombra. */
+    .menu-aberto .menu-toggle:active {
+        transform: scale(0.9);
+    }
+
+    /* Sem contorno de foco ao tocar; pelo teclado (Tab) ele continua aparecendo. */
+    .menu-toggle:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    /* Painel que desce logo abaixo do cabeçalho. */
+    .menu-pronto nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 4px; /* fica abaixo da borda lilás do header */
+        z-index: 1;      /* fica acima do fundo escurecido */
+
+        /* Limita o painel à altura disponível no celular deitado.
+           Quando faltar espaço, os links podem ser rolados dentro dele. */
+        max-height: calc(100dvh - 76px);
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior-y: contain;
+
+        visibility: hidden;
+        transition: visibility 0s linear 280ms; /* espera a lista subir para esconder */
+    }
+
+    .menu-aberto nav {
+        visibility: visible;
+        transition: visibility 0s;
+    }
+
+    /* A lista é o que desliza: começa escondida acima (-100% da
+       própria altura) e desce até o lugar certo. */
+    .menu-pronto nav ul {
+        flex-direction: column;
+        padding: 8px 16px 12px;
+        background-color: var(--lavanda);
+        border-bottom: 4px solid var(--roxo-escuro);
+
+        transform: translateY(-100%);
+        transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .menu-aberto nav ul {
+        transform: translateY(0);
+    }
+
+    /* Linhas quase transparentes separando os itens. */
+    .menu-pronto nav li {
+        padding: 6px 0;
+        border-bottom: 2px solid rgba(46, 31, 69, 0.1);
+    }
+
+    .menu-pronto nav li:last-child {
+        border-bottom: none;
+    }
+
+    .menu-pronto nav a {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 10px 14px;
+        font-size: 1.1rem;
+    }
+
+    /* Retorno ao toque: o link "acende" em branco enquanto o dedo está nele. */
+    .menu-pronto nav a:active:not(.ativo) {
+        background-color: var(--branco);
+        border-color: var(--lilas-forte);
+    }
+
+    /* Fundo escurecido abaixo do painel: separa o menu da página
+       e mostra que tocar fora fecha o menu. */
+    header.menu-pronto::after {
+        content: "";
+        position: absolute;
+        top: calc(100% + 4px); /* começa logo abaixo da borda lilás do header */
+        left: 0;
+        right: 0;
+        height: 100dvh;
+        background-color: rgba(46, 31, 69, 0.45);
+
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 280ms ease-out,
+                    visibility 0s linear 280ms;
+    }
+
+    header.menu-aberto::after {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 280ms ease-out,
+                    visibility 0s;
+    }
+
+    /* Com o menu aberto, a página por trás não rola. */
+    html.menu-sem-rolagem {
+        overflow: hidden;
+    }
+
+    /* O chat da Nubi sai de cena enquanto o menu está aberto,
+       para não ficar por cima do fundo escurecido. */
+    html.menu-sem-rolagem .chat-toggle,
+    html.menu-sem-rolagem .chat-widget {
+        visibility: hidden;
+    }
+}
+
 /* A seção Início combina ilustração SVG e sombra sólida. */
 #inicio {
     padding: 72px 48px 56px;
@@ -270,10 +467,12 @@ nav a.ativo {
     flex-basis: 100%;
 }
 
+/* Texto de abertura com no máximo ~62 caracteres por linha,
+   para não virar uma linha longa e cansativa no computador. */
 #beneficios > p,
 #planos > p {
-    max-width: none;
-    padding-right: 25%;
+    max-width: none; /* ocupa a linha toda, então os cards ficam embaixo */
+    padding-right: calc(100% - 62ch); /* no celular o cálculo dá 0 */
 }
 
 /* Os cards adaptam sua largura ao espaço disponível com Flexbox. */
@@ -426,8 +625,7 @@ nav a.ativo {
     background-size: 264px auto;
 }
 
-/* Formulário de contato: campos organizados verticalmente */
-/* O formulário mantém campos empilhados para facilitar o preenchimento. */
+/* Formulário de contato: campos empilhados para facilitar o preenchimento. */
 #form-contato {
     display: flex;
     flex-direction: column;
@@ -482,8 +680,7 @@ nav a.ativo {
 }
 
 /* Botões do formulário com sombra sólida em estilo pixel */
-#form-contato button,
-#form-contato input[type="submit"] {
+#form-contato button {
     width: auto;
     margin-top: 16px;
     padding: 12px 24px;
@@ -501,27 +698,91 @@ nav a.ativo {
                 background-color 150ms ease-out;
 }
 
-#form-contato button:active,
-#form-contato input[type="submit"]:active {
+#form-contato button:active {
     transform: translate(4px, 4px);
     box-shadow: 0 0 0 var(--lilas-forte);
 }
 
-/* Rodapé com as mesmas cores e borda do cabeçalho */
+/* Rodapé: identidade pixelada e créditos acadêmicos em texto discreto.
+   O espaço lateral impede sobreposição com o botão flutuante da Nubi. */
 footer {
-    padding: 30px 20px;
-    text-align: center;
-    font-family: var(--fonte-titulo);
-    font-size: 1rem;
-    color: var(--roxo-escuro);
+    padding: 24px 96px 24px 20px; /* 96px à direita: coluna livre para o botão */
+    min-height: 100px;
     background-color: var(--lavanda);
     border-top: 4px solid var(--lilas);
+    color: var(--roxo);
+    font-size: 0.875rem;
+    line-height: 1.55;
 }
 
-/* Espaço para o botão flutuante em telas pequenas */
-@media (max-width: 600px) {
+.rodape-conteudo {
+    max-width: 1060px; /* mesma largura do conteúdo do <main> */
+    margin: 0 auto;
+}
+
+.rodape-principal {
+    font-family: var(--fonte-titulo);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--roxo-escuro);
+}
+
+/* Na Pixelify o © vira um pontinho; na Figtree ele fica legível. */
+.rodape-copy {
+    font-family: var(--fonte-texto);
+    font-size: 1.1em;
+}
+
+.rodape-creditos {
+    margin-top: 8px;
+    text-wrap: balance; /* quando quebra, as linhas ficam de tamanho parecido */
+}
+
+/* Frases e nomes nunca são divididos entre duas linhas. */
+.rodape-marca,
+.rodape-slogan,
+.rodape-creditos span {
+    white-space: nowrap;
+}
+
+/* Celular: a marca ocupa duas linhas, sem o travessão. */
+.rodape-sep {
+    display: none;
+}
+
+.rodape-marca,
+.rodape-slogan {
+    display: block;
+}
+
+/* Tablet e computador: as duas linhas centralizadas no footer. */
+@media (min-width: 720px) {
     footer {
-        padding-bottom: 76px;
+        display: flex;
+        align-items: center;
+        min-height: 96px;  /* 26px acima do topo do botão da Nubi */
+        padding: 0 40px;
+    }
+
+    .rodape-conteudo {
+        flex: 1;
+        /* Mesmo espaço dos dois lados: o centro continua no meio da
+           tela e o texto nunca chega embaixo do botão da Nubi. */
+        padding: 0 64px;
+        text-align: center;
+    }
+
+    .rodape-sep {
+        display: inline;
+    }
+
+    .rodape-marca,
+    .rodape-slogan {
+        display: inline;
+    }
+
+    .rodape-creditos {
+        margin-top: 2px;
     }
 }
 
@@ -549,7 +810,7 @@ footer {
     box-shadow: 0 0 0 var(--lilas-forte);
 }
 
-/* ---------- 11. Chat da Nubi ---------- */
+/* Chat da Nubi */
 .chat-toggle {
     position: fixed;
     bottom: 14px;   /* fica dentro da faixa do rodapé quando a página chega ao fim */
@@ -585,8 +846,9 @@ footer {
     background-color: var(--rosa);
 }
 
+/* Mesmo X do menu e do cabeçalho do chat (ico-fechar.svg). */
 .chat-toggle.aberto::before {
-    background-image: url("../imagens/icones/ico-x.svg");
+    background-image: url("../imagens/icones/ico-fechar.svg");
 }
 
 #chat.hidden {
@@ -649,11 +911,14 @@ footer {
 }
 
 .chat-header button {
+    /* Centraliza o ícone ico-fechar.svg dentro do quadrado rosa. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
     width: 36px;
     height: 36px;
     background-color: var(--rosa);
-    color: #2E1F45;
-    font-family: var(--fonte-titulo);
     border: 3px solid #2E1F45;
     cursor: pointer;
     transition: background-color 150ms ease-out;
@@ -730,16 +995,16 @@ footer {
     min-height: 48px;
 }
 
-/* Interação do botão do formulário em dispositivos com mouse */
+/* Efeitos de hover: só em aparelhos com mouse (no celular, o hover
+   "gruda" depois do toque). Todos os hovers do site ficam aqui. */
 @media (hover: hover) and (pointer: fine) {
-    #form-contato button:hover,
-    #form-contato input[type="submit"]:hover {
+    /* Botão do formulário */
+    #form-contato button:hover {
         transform: translate(-2px, -2px);
         box-shadow: 6px 6px 0 var(--rosa-forte);
     }
-}
 
-@media (hover: hover) and (pointer: fine) {
+    /* Links do menu */
     nav a:hover {
         background-color: var(--lavanda);
         border-color: var(--lilas-forte);
@@ -749,9 +1014,8 @@ footer {
         background-color: var(--roxo);
         border-color: var(--roxo-escuro);
     }
-}
 
-@media (hover: hover) and (pointer: fine) {
+    /* Cards */
     .card-beneficio:hover,
     .card-plano:hover {
         transform: translate(-3px, -3px);
@@ -764,10 +1028,8 @@ footer {
     .card-plano:hover {
         box-shadow: 11px 11px 0 var(--rosa-forte);
     }
-}
 
-/* Interações dos controles da Nubi em dispositivos com mouse. */
-@media (hover: hover) and (pointer: fine) {
+    /* Controles da Nubi */
     .chat-toggle:hover {
         max-width: 300px;
     }
@@ -794,35 +1056,6 @@ footer {
 
 .chat-toggle.aberto:focus-visible {
     max-width: 56px;
-}
-
-@media (max-width: 719px) {
-    #beneficios > p,
-    #planos > p {
-        padding-right: 0;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .card-beneficio,
-    .card-plano,
-    #form-contato input,
-    #form-contato textarea,
-    #form-contato button,
-    #form-contato input[type="submit"] {
-        transition: none;
-    }
-
-    .card-beneficio:hover,
-    .card-plano:hover {
-        transform: none;
-    }
-}
-
-@media (min-width: 400px) {
-    .logo-clube {
-        width: 190px;
-    }
 }
 
 @media (min-width: 720px) {
@@ -864,7 +1097,9 @@ footer {
 
 @media (min-width: 980px) {
     header {
-        padding: 10px 40px;
+        /* Em telas largas, logo e menu ficam alinhados com as bordas
+           do conteúdo (1060px), e não nas pontas da tela. */
+        padding: 10px max(40px, calc((100% - 1060px) / 2));
     }
 
     .logo-clube {
@@ -881,14 +1116,12 @@ footer {
     }
 }
 
-/* Ilustração lateral de contato só aparece quando há espaço */
-@media (max-width: 899px) {
+/* Até tablet: remove as ilustrações laterais que poderiam cobrir o texto. */
+@media (max-width: 979px) {
     #contato {
         background-image: none;
     }
-}
 
-@media (max-width: 979px) {
     #inicio {
         padding: 56px 24px 250px;
         min-height: 0;
@@ -904,15 +1137,8 @@ footer {
     }
 }
 
-@media (max-width: 480px) {
-    #inicio h2::before {
-        width: 44px;
-        height: 44px;
-    }
-}
-
 /* Chat no celular: respeita as bordas e deixa o botão acessível. */
-@media (max-width: 480px) {
+@media (max-width: 719px) {
     .chat-toggle {
         right: 16px;
         bottom: 14px;
@@ -925,8 +1151,120 @@ footer {
     }
 }
 
-/* Respeita a preferência do estudante por menos animações. */
+/* Telas baixas (celular deitado): o chat desce até o rodapé da tela,
+   ao lado do botão da Nubi, e não passa por cima do cabeçalho.
+   Altura: tela − cabeçalho (até 97px) − margens. */
+@media (max-height: 500px) {
+    .chat-widget {
+        right: 86px;   /* ao lado do botão (56px + margens) */
+        bottom: 14px;
+        width: min(420px, calc(100vw - 102px));
+        /* Ocupa a altura livre entre o cabeçalho (até 97px) e o rodapé da tela */
+        height: calc(100dvh - 119px);
+        max-height: none;
+    }
+}
+
+/* Telas mínimas e zoom alto (até 319px, ex.: Galaxy Fold dobrado com 280px):
+   versão compacta para evitar corte nos cards e créditos. */
+@media (max-width: 319px) {
+    /* Mantém os quatro links acessíveis mesmo sem JavaScript. */
+    header:not(.menu-pronto) nav ul {
+        flex-wrap: wrap;
+    }
+
+    main {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .card-beneficio,
+    .card-plano {
+        min-width: 0;
+        padding: 18px 12px 22px;
+    }
+
+    .card-plano h3 {
+        gap: 6px;
+        font-size: 1.25rem;
+        overflow-wrap: anywhere;
+    }
+
+    .card-plano h3::before {
+        width: 24px;
+        height: 24px;
+    }
+
+    .card-plano .preco {
+        font-size: 1.55rem;
+    }
+
+    #inicio {
+        padding: 32px 12px 190px;
+        background-size: 168px auto, 56px auto, 16px 16px;
+        /* Quadradinhos flutuantes mais baixos, longe do fim do texto */
+        background-position:
+            center bottom 28px,
+            right 20px bottom 136px,
+            left top;
+    }
+
+    #inicio h2 {
+        font-size: 1.7rem;
+    }
+
+    #inicio p {
+        font-size: 1rem;
+    }
+
+    #contato {
+        padding: 20px 12px;
+    }
+
+    footer {
+        padding: 20px 12px 84px;
+    }
+
+    .rodape-creditos span {
+        white-space: normal;
+    }
+}
+
+/* Respeita a preferência do estudante por menos animações.
+   Todas as regras de "reduzir movimento" do site ficam aqui, no fim
+   do arquivo, para valerem por cima das animações definidas antes. */
 @media (prefers-reduced-motion: reduce) {
+    /* Links do menu: pulo direto em vez de deslizar */
+    html {
+        scroll-behavior: auto;
+    }
+
+    /* Cards e formulário */
+    .card-beneficio,
+    .card-plano,
+    #form-contato input,
+    #form-contato textarea,
+    #form-contato button {
+        transition: none;
+    }
+
+    .card-beneficio:hover,
+    .card-plano:hover,
+    #form-contato button:hover {
+        transform: none;
+    }
+
+    /* Menu do celular */
+    .menu-toggle,
+    .menu-pronto nav,
+    .menu-aberto nav,
+    .menu-pronto nav ul,
+    header.menu-pronto::after,
+    header.menu-aberto::after {
+        transition: none;
+    }
+
+    /* Chat da Nubi */
     .chat-toggle,
     .chat-header button,
     .chat-input-area button {
