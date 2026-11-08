@@ -962,6 +962,7 @@ footer {
     color: var(--roxo-escuro);
     border-color: var(--lilas-forte);
     box-shadow: 4px 4px 0 var(--lilas);
+    white-space: pre-line;
 }
 
 .chat-box .usuario {
@@ -969,6 +970,12 @@ footer {
     background-color: var(--roxo);
     color: var(--branco);
     box-shadow: 4px 4px 0 var(--rosa-forte);
+}
+
+/* Destaca o texto selecionado nas mensagens do estudante */
+.chat-box .usuario::selection {
+    background-color: var(--rosa);
+    color: var(--roxo-escuro);
 }
 
 .chat-input-area {
