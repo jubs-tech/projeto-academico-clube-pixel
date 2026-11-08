@@ -21,8 +21,9 @@
    - Até tablet .... até 979px   → @media (max-width: 979px)
    - Tela mínima ... até 319px   → @media (max-width: 319px)
    - Tela baixa .... até 500px de altura → @media (max-height: 500px)
+     (usada junto com o celular para o chat em tela cheia)
    ============================================================ */
-
+   
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap');
 
 /* Variáveis globais: a mesma paleta é reutilizada em todo o site. */
@@ -1137,31 +1138,47 @@ footer {
     }
 }
 
-/* Chat no celular: respeita as bordas e deixa o botão acessível. */
+/* Botão da Nubi no celular: um pouco mais perto da borda. */
 @media (max-width: 719px) {
     .chat-toggle {
         right: 16px;
         bottom: 14px;
     }
-
-    .chat-widget {
-        right: 16px;
-        bottom: 82px;
-        width: calc(100vw - 32px);
-    }
 }
 
-/* Telas baixas (celular deitado): o chat desce até o rodapé da tela,
-   ao lado do botão da Nubi, e não passa por cima do cabeçalho.
-   Altura: tela − cabeçalho (até 97px) − margens. */
-@media (max-height: 500px) {
+/* Chat em tela cheia no celular (em pé ou deitado), como nos apps de
+   mensagem. Com o teclado aberto, o script.js mede a área visível e
+   preenche --chat-altura e --chat-topo, então o campo fica logo acima
+   do teclado e as mensagens ocupam o resto. Sem o script, vale 100dvh. */
+@media (max-width: 719px), (max-height: 500px) {
     .chat-widget {
-        right: 86px;   /* ao lado do botão (56px + margens) */
-        bottom: 14px;
-        width: min(420px, calc(100vw - 102px));
-        /* Ocupa a altura livre entre o cabeçalho (até 97px) e o rodapé da tela */
-        height: calc(100dvh - 119px);
+        top: var(--chat-topo, 0px);
+        right: 0;
+        bottom: auto;
+        left: 0;
+        width: 100%;
+        height: var(--chat-altura, 100dvh);
         max-height: none;
+        border: none;
+        box-shadow: none;
+        transform-origin: bottom center;
+    }
+
+    /* A página de trás não rola enquanto o chat está aberto. */
+    html.chat-sem-rolagem {
+        overflow: hidden;
+    }
+
+    /* O X do cabeçalho do chat fecha a conversa; o botão flutuante
+       sai de cena para não ficar por cima do campo de mensagem. */
+    html.chat-sem-rolagem .chat-toggle {
+        display: none;
+    }
+
+    /* Único jeito de fechar no celular: área de toque maior. */
+    .chat-header button {
+        width: 44px;
+        height: 44px;
     }
 }
 
@@ -1280,5 +1297,13 @@ footer {
     .chat-toggle:hover,
     .chat-input-area button:hover {
         transform: none;
+    }
+}
+
+/* Evita que o cabeçalho e o campo da Nubi encolham com o teclado aberto */
+@media (max-width: 719px), (max-height: 500px) {
+    .chat-header,
+    .chat-input-area {
+        flex-shrink: 0;
     }
 }

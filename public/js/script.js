@@ -64,16 +64,47 @@ document.addEventListener("DOMContentLoaded", () => {
     botaoAbrir.setAttribute("aria-expanded", "false");
     botaoAbrir.setAttribute("aria-label", "Conversar com a Nubi");
 
+    // No celular o chat ocupa a tela inteira. Quando o teclado abre, a
+    // área visível da tela diminui; o visualViewport informa esse tamanho
+    // e o CSS usa as variáveis --chat-altura e --chat-topo para o chat
+    // caber exatamente acima do teclado.
+    function ajustarChatAoTeclado() {
+        const areaVisivel = window.visualViewport;
+        if (!areaVisivel) return;
+
+        const raiz = document.documentElement;
+        raiz.style.setProperty("--chat-altura", `${areaVisivel.height}px`);
+        raiz.style.setProperty("--chat-topo", `${areaVisivel.offsetTop}px`);
+
+        // Mantém a última mensagem à vista quando o teclado sobe.
+        caixaMensagens.scrollTop = caixaMensagens.scrollHeight;
+    }
+
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", ajustarChatAoTeclado);
+        window.visualViewport.addEventListener("scroll", ajustarChatAoTeclado);
+    }
+
+    // Só coloca o cursor no campo automaticamente em aparelhos com mouse.
+    // No celular isso abriria o teclado antes de a pessoa ler a Nubi.
+    const temMouse = window.matchMedia("(hover: hover) and (pointer: fine)");
+
     function abrirChat() {
         painelChat.classList.remove("hidden");
+        document.documentElement.classList.add("chat-sem-rolagem");
+        ajustarChatAoTeclado();
         botaoAbrir.classList.add("aberto");
         botaoAbrir.setAttribute("aria-expanded", "true");
         botaoAbrir.setAttribute("aria-label", "Fechar conversa com a Nubi");
-        campoNubi.focus();
+
+        if (temMouse.matches) {
+            campoNubi.focus();
+        }
     }
 
     function fecharChat() {
         painelChat.classList.add("hidden");
+        document.documentElement.classList.remove("chat-sem-rolagem");
         botaoAbrir.classList.remove("aberto");
         botaoAbrir.setAttribute("aria-expanded", "false");
         botaoAbrir.setAttribute("aria-label", "Conversar com a Nubi");
